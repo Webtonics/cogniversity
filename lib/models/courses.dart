@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cogniversity/models/lesson.dart';
+import 'package:cogniversity/models/user_model.dart';
 
 class Courses {
   final String courseId;
   final String title;
   final String description;
-  final lessons; // list of videos
-  final studentEnrolled; //list of students
+  final List<Lesson>lessons; // list of videos
+  final List<User>studentEnrolled; //list of students
   final String instructor;
   final assignments;
   final quizzes;
@@ -15,9 +17,9 @@ class Courses {
       {required this.courseId,
       required this.title,
       required this.description,
-      this.lessons,
+      required this.lessons,
       required this.thumbnail,
-      this.studentEnrolled,
+      required this.studentEnrolled,
       required this.instructor,
       this.assignments,
       this.quizzes});

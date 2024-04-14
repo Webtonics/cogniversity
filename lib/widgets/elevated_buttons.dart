@@ -22,7 +22,7 @@ class MyElevattedButton extends StatelessWidget {
           backgroundColor: color,
         ),
         child: Text(
-          title));
+          title, style: const TextStyle( color: Colors.white),),);
           
   }
 }

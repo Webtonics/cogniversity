@@ -17,7 +17,7 @@ class CourseCarosel extends StatelessWidget {
         scrollDirection: direction,
         itemBuilder: ((context, index) {
           return GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const CourseDetails()))),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>  const CourseDetails(courseName: ' GSP 101- Use of English',)))),
             child: const CourseCardItem());
       })));
   }

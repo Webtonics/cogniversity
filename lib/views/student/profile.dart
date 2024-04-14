@@ -21,6 +21,8 @@
 //   }
 // }
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/textfield.dart';
@@ -80,11 +82,12 @@ class _ProfileViewState extends State<ProfileView> {
                 const CircleAvatar(
                   radius: 60,
 
+                  
                   // profile image
                   // backgroundImage: NetworkImage(user.photoURL),
-                  backgroundImage: NetworkImage("url"),
-                ),
+                  backgroundImage: CachedNetworkImageProvider("https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww")),
                 //username
+              
                 const MySpacer(height: 7,),
                 Expanded(
                   child: Container(
@@ -130,6 +133,11 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   ),
                 ),
+
+                MySpacer(height: 7,),
+                MyElevattedButton(title: "Login as Educator", action: (){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp() )));
+                }),
 
                 const MySpacer(height: 7,),
                 IconButton(
