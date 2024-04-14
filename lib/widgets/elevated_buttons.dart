@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MyElevattedButton extends StatelessWidget {
   const MyElevattedButton({
@@ -23,9 +22,7 @@ class MyElevattedButton extends StatelessWidget {
           backgroundColor: color,
         ),
         child: Text(
-          title,
-          style: GoogleFonts.poppins(
-              color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
-        ));
+          title));
+          
   }
 }

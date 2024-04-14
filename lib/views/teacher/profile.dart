@@ -12,15 +12,17 @@ class _LecturerProfileState extends State<LecturerProfile> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Column(
-        children: [
-          const Center(
-            child: Text("Profile"),
-          ),
-          ElevatedButton(onPressed: (){
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const StudentApp() )));
-          }, child: const Text("Login as Student"))
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Center(
+              child: Text("Profile"),
+            ),
+            ElevatedButton(onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const StudentApp() )));
+            }, child: const Text("Login as Student"))
+          ],
+        ),
       ),
     );
   }

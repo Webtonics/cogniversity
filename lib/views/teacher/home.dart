@@ -40,6 +40,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
               
 
               Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
                 // height: 800,
                 color: Colors.white,
                 child: Column(
@@ -49,9 +50,9 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                       child: Center(child: Text("Your Courses",style: Theme.of(context).textTheme.titleMedium,)),
                     ),
                     const MySpacer(height: 3,),
-                    SizedBox(
-                      height: 800,
-                      child: const CourseCarosel(direction:Axis.vertical)),
+                    const SizedBox(
+                      height:1000,
+                      child: CourseCarosel(direction:Axis.vertical)),
                   ],
                 ),
               ),
