@@ -1,3 +1,4 @@
+import 'package:cogniversity/views/teacher/inner/add_course.dart';
 import 'package:cogniversity/widgets/course_carosel.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/my_appbar.dart';
@@ -34,7 +35,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
           
               //Searchbar
               const MySearchBar(),
-              const MySpacer(height: 7,), 
+              const MySpacer(height: 23,), 
 
               // Your courses
               
@@ -46,8 +47,16 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(child: Text("Your Courses",style: Theme.of(context).textTheme.titleMedium,)),
+                      padding: const EdgeInsets.all(7.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Center(child: Text("Your Courses",style: Theme.of(context).textTheme.titleMedium,)),
+                          ElevatedButton.icon(onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const AddNewCourse())));
+                          }, icon: Icon(Icons.add), label:Text(" Add course"))
+                        ],
+                      ),
                     ),
                     const MySpacer(height: 3,),
                     const SizedBox(

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           textTheme: const TextTheme( 
-            titleLarge: TextStyle(fontSize: 35, fontWeight: FontWeight.w500, color: Colors.white, ),
+            titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.w500, color: Colors.white, ),
             titleMedium:TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.deepPurple, )
           )
         ),
