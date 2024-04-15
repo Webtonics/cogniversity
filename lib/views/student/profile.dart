@@ -90,6 +90,7 @@ class _ProfileViewState extends State<ProfileView> {
               
                 const MySpacer(height: 7,),
                 Expanded(
+                  // ignore: avoid_unnecessary_containers
                   child: Container(
                     child: Column(
                       children: [
