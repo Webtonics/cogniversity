@@ -35,10 +35,10 @@ class _StudentAppState extends State<StudentApp> {
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.black,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_active), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Courses"),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_active), label: "Notifications"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
         onTap: (value) {
           setState(() {

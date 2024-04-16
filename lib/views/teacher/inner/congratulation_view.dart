@@ -20,11 +20,25 @@ class CongratulationView extends StatelessWidget {
                 backgroundColor: Colors.deepOrange,
               ),
               //Text
-              const Text("Congratulations your course has been add", style: TextStyle( fontSize: 35, fontWeight: FontWeight.bold),),
+              const Center(child: Text("Congratulations your course has been add", textAlign: TextAlign.center,style: TextStyle( fontSize: 27, fontWeight: FontWeight.bold),)),
               const MySpacer(
                 height: 8,
               ),
       
+              MyElevattedButton(title: "Make changes", action: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
+              }),
+
+              const MySpacer(
+                height: 8,
+              ),
+              MyElevattedButton(title: "Start Adding quiz", action: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
+              }),
+
+              const MySpacer(
+                height: 8,
+              ),
               MyElevattedButton(title: "Continue to Dashboard", action: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
               }),

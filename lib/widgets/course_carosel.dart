@@ -33,7 +33,7 @@ class CourseCardItem extends StatelessWidget {
     return Padding(
      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Container(
-        alignment: AlignmentDirectional.center,
+        alignment: AlignmentDirectional.bottomCenter,
         height: 200,
         width: 280,
         decoration: const BoxDecoration(

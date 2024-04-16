@@ -34,13 +34,34 @@ class _AddNewCourseState extends State<AddNewCourse> {
     // final bool isfirst = currentstep == getstep()[0];
     
     return  Scaffold(
+      endDrawer: Drawer(),
       appBar: AppBar(
         title: const Text("Add a New Course"),
+        
       ),
       body:  SingleChildScrollView(
         child: Column(
           children: [
-            Stepper(     
+            Stepper(  
+              
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                return Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom( backgroundColor: Colors.deepPurple, shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(2)) ),
+                      onPressed: details.onStepContinue,
+                      child: const Text('Continue', style: TextStyle(color: Colors.white, fontSize: 12),),
+                    ),
+                    const MySpacer( width: 5,),
+                    if (currentstep > 0) // Only show back button if not on the first step
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom( backgroundColor: Colors.deepOrange, shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(2)) ),
+                        onPressed: details.onStepCancel,
+                        child: const Text('Back',style: TextStyle(color: Colors.white, fontSize: 12),),
+                      ),
+                  ],
+                );
+              },
               currentStep: currentstep,      
               controller: scrollController,
               steps:getstep(),
@@ -151,10 +172,12 @@ class _AddNewCourseState extends State<AddNewCourse> {
                   ],
                 ),
               )),
-              const Step(title: Text("Finishing Videos"), content: Column(
-                children: [
-                  Text("Basic")
-                ],
+              const Step(title: Text("Add Lesson"), content: SizedBox(
+                child: Column(
+                  children: [
+                    Text("Basic")
+                  ],
+                ),
               )),
                
     ];

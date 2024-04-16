@@ -1,4 +1,4 @@
-import 'package:cogniversity/views/teacher/courses.dart';
+// import 'package:cogniversity/views/teacher/courses.dart';
 import 'package:cogniversity/views/teacher/home.dart';
 import 'package:cogniversity/views/teacher/profile.dart';
 import 'package:cogniversity/views/teacher/quiz.dart';
@@ -16,7 +16,7 @@ class _TeacherAppState extends State<TeacherApp> {
   int currentTab = 0;
 
   List<Widget> views = const[
-    LecturerDashboard(), LecturerCourseView(), LecturerQuiz(), LecturerProfile()
+    LecturerDashboard(),  LecturerQuiz(), LecturerProfile()
   ];
 
   @override
@@ -38,7 +38,7 @@ class _TeacherAppState extends State<TeacherApp> {
         },
         items: const[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Courses"),
+          // BottomNavigationBarItem(icon: Icon(Icons.book), label: "Courses"),
           BottomNavigationBarItem(icon: Icon(Icons.quiz), label: "Quiz"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
 
