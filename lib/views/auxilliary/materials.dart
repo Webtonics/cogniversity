@@ -11,15 +11,19 @@ class MaterialsView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ListView.builder(itemBuilder: ((context, index) {
-            return ListTile(
-              leading: Icon(Icons.picture_as_pdf_sharp),
-              title: const Text("VTE 101 NOTE.PPT"),
-              trailing: IconButton(onPressed: (){
-                //Download material
-              }, icon: const Icon(Icons.download)),
-            );
-          }))
+          Expanded(
+            child: ListView.builder(itemCount: 5,itemBuilder: ((context, index) {
+              return Card(
+                child: ListTile(
+                  leading: Icon(Icons.picture_as_pdf_sharp),
+                  title: const Text("VTE 101 NOTE.PPT"),
+                  trailing: IconButton(onPressed: (){
+                    //Download material
+                  }, icon: const Icon(Icons.download)),
+                ),
+              );
+            })),
+          )
         ],
       ),
     );

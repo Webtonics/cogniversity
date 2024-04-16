@@ -39,7 +39,7 @@ class CourseCardItem extends StatelessWidget {
         decoration: const BoxDecoration(
           color:  Color.fromARGB(255, 40, 15, 84),
           borderRadius: BorderRadius.all(Radius.circular(24)),
-          image: DecorationImage(opacity: 0.6,image: NetworkImage("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xhc3N8ZW58MHx8MHx8fDA%3D"))),
+          image: DecorationImage(fit: BoxFit.cover, opacity: 0.6,image: NetworkImage("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xhc3N8ZW58MHx8MHx8fDA%3D"))),
         child: const Column(
           children: [
             Text("GSP 101- Use of English", style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),

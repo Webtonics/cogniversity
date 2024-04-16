@@ -1,4 +1,5 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
+import 'package:cogniversity/views/auxilliary/materials.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
@@ -49,7 +50,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   //materials
-                  const Cards( title: "Materials", icon: Icons.notes,),
+                  GestureDetector(onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MaterialsView())),child: const Cards( title: "Materials", icon: Icons.notes,)),
                   //Enrolled
                   Container(
                     
