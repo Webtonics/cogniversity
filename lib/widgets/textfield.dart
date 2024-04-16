@@ -7,15 +7,19 @@ class MyTextField extends StatelessWidget {
       required this.label,
       required this.hinttext,
       required this.keyboardtype,
-      required this.enabled});
+      required this.enabled, this.maxlines = 1}
+      
+      );
   final TextEditingController controller;
   final String label;
   final String hinttext;
   final TextInputType keyboardtype;
   final bool enabled;
+  final int? maxlines;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLines: maxlines,
       enabled: enabled,
       controller: controller,
       decoration: InputDecoration(
