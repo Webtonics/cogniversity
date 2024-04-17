@@ -5,8 +5,8 @@ import 'package:cogniversity/views/teacher/quiz.dart';
 import 'package:flutter/material.dart';
 
 class TeacherApp extends StatefulWidget {
-  const TeacherApp({super.key});
-
+  const TeacherApp({super.key, required this.tab});
+  final int tab;
   @override
   State<TeacherApp> createState() => _TeacherAppState();
 }
@@ -15,7 +15,7 @@ class _TeacherAppState extends State<TeacherApp> {
 
   int currentTab = 0;
 
-  List<Widget> views = const[
+  List<Widget> views = [
     LecturerDashboard(),  LecturerQuiz(), LecturerProfile()
   ];
 
@@ -25,7 +25,7 @@ class _TeacherAppState extends State<TeacherApp> {
     return  Scaffold(
       // backgroundColor: Color.fromARGB(255, 40, 15, 84),
       
-      body: views[currentTab],
+      body: views[currentTab | widget.tab],
 
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.red,

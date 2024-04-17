@@ -1,3 +1,4 @@
+import 'package:cogniversity/widgets/quizcard.dart';
 import 'package:flutter/material.dart';
 
 class LecturerQuiz extends StatefulWidget {
@@ -10,10 +11,28 @@ class LecturerQuiz extends StatefulWidget {
 class _LecturerQuizState extends State<LecturerQuiz> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Quiz"),
+    return   Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+               const Center(
+                child: Text("Quiz"),
+                
+              ),
+              Expanded(
+                child: ListView.builder( 
+                  itemCount: 6,
+                  itemBuilder: (context, index){
+                    return const QuizCard();
+                },),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+

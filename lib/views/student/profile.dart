@@ -137,7 +137,7 @@ class _ProfileViewState extends State<ProfileView> {
 
                 MySpacer(height: 7,),
                 MyElevattedButton(title: "Login as Educator", action: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp() )));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp( tab: 0,) )));
                 }),
 
                 const MySpacer(height: 7,),

@@ -38,7 +38,7 @@ class _RootAppState extends State<RootApp> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(onPressed: (){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp())));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp(tab: 0,))));
                       },icon: const Icon(Icons.person_2),label:const Text("Educator"), style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14),),
                       minimumSize:  const Size(100, 60)

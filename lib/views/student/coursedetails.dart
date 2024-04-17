@@ -1,5 +1,7 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
+import 'package:cogniversity/views/student/studentapp.dart';
+import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
@@ -32,7 +34,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 alignment: Alignment.bottomCenter,
                height: 300,
                width: double.infinity,
-               decoration: const BoxDecoration( image: DecorationImage(fit: BoxFit.cover,image: NetworkImage("https://images.ctfassets.net/00atxywtfxvd/3LfiAb2KLR2YvdjcdA2Cd3/e44c8f69bc2f2f50e1a0bf9c8ab76bf5/iStock-1213470247__1_.jpg?w=825&h=630&q=50&fit=fill"))
+               decoration: const BoxDecoration( image: DecorationImage(fit: BoxFit.cover,image: NetworkImage("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xhc3N8ZW58MHx8MHx8fDA%3D"))
                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end ,
@@ -70,7 +72,12 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ),
                   // Cards( title: "Enrolled", icon: Icons.people,),
                   //Quiz
-                  const Cards( title: "Quiz", icon: Icons.quiz_rounded,),
+                  GestureDetector
+                  (
+                    onTap: () {
+                      Navigator.of( context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp(tab: 1))));
+                    },
+                    child: const Cards( title: "Quiz", icon: Icons.quiz_rounded,)),
                   //share code
                   const Cards( title: "Share", icon: Icons.share,),
                 ],
@@ -103,7 +110,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                       child: Text("Enroll to see Courses", style: TextStyle(fontWeight: FontWeight.bold),),
                     ),),
 
-                const MySpacer(height: 7,),
+                const MySpacer(height: 15,),
 
              enrolled == false ? MyElevattedButton(
                       title: "Enroll",

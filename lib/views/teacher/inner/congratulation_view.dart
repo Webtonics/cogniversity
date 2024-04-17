@@ -1,3 +1,4 @@
+// import 'package:cogniversity/views/teacher/quiz.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
@@ -27,21 +28,21 @@ class CongratulationView extends StatelessWidget {
                 ),
         
                 MyElevattedButton(title: "Make changes", action: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp(tab: 0,) ));
                 }),
       
                 const MySpacer(
                   height: 8,
                 ),
                 MyElevattedButton(title: "Start Adding quiz", action: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp( tab: 1,) ));
                 }),
       
                 const MySpacer(
                   height: 8,
                 ),
                 MyElevattedButton(title: "Continue to Dashboard", action: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp() ));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TeacherApp( tab: 0,) ));
                 }),
       
                 //button to view the course (Future)
