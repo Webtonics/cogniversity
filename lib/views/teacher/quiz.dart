@@ -1,3 +1,5 @@
+import 'package:cogniversity/views/teacher/inner/add_quiz.dart';
+import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/quizcard.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,14 @@ class _LecturerQuizState extends State<LecturerQuiz> {
                 child: Text("Quiz"),
                 
               ),
+              const MySpacer(height: 7,),
+              Container(
+                alignment: Alignment.topRight,
+                child: ElevatedButton.icon(onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AddQuiz(editing: false)));
+                }, icon: const Icon(Icons.add), label: const Text("Add Quiz"))
+              ),
+              const MySpacer(height: 7,),
               Expanded(
                 child: ListView.builder( 
                   itemCount: 6,
