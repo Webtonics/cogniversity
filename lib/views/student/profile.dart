@@ -22,11 +22,13 @@
 // }
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -137,6 +139,7 @@ class _ProfileViewState extends State<ProfileView> {
 
                 MySpacer(height: 7,),
                 MyElevattedButton(title: "Login as Educator", action: (){
+                  context.read<RoleProvider>().setRoleAsEducator();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp( tab: 0,) )));
                 }),
 

@@ -1,10 +1,12 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
-import 'package:cogniversity/views/student/studentapp.dart';
+import 'package:cogniversity/views/teacher/inner/add_lesson.dart';
+// import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
+import 'package:cogniversity/widgets/my_action_button.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,7 @@ class _CourseDetailsState extends State<CourseDetails> {
   Widget build(BuildContext context) {
 
     bool isEducator = context.watch<RoleProvider>().isEducator;
+
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -90,13 +93,25 @@ class _CourseDetailsState extends State<CourseDetails> {
                 //lessons
                 // card
                ),
-               const Text(
-                "Lessons",style:  TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
-               ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     const Text(
+                      "Lessons",style:  TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+                     ),
+                
+                    isEducator? const MyActionButton(page: AddLessonView(), icon: Icons.add, title: "Add Lesson"): Container(),
+                
+                   ],
+                               ),
+                ),
                const MySpacer(height: 7,),
 
               //  LessonList(index: index)
-              enrolled == true? Padding(
+
+             (isEducator || enrolled == true) ? Padding(   //Using provider to handle state of lecturer
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                         height: 400,
@@ -117,7 +132,7 @@ class _CourseDetailsState extends State<CourseDetails> {
 
                 const MySpacer(height: 15,),
 
-             enrolled == false ? MyElevattedButton(
+             !isEducator | enrolled  ? MyElevattedButton(
                       title: "Enroll",
                       color: Colors.black,
                       action: () {

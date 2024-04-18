@@ -1,5 +1,7 @@
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LecturerProfile extends StatefulWidget {
   const LecturerProfile({super.key});
@@ -19,6 +21,7 @@ class _LecturerProfileState extends State<LecturerProfile> {
               child: Text("Profile"),
             ),
             ElevatedButton(onPressed: (){
+              context.read<RoleProvider>().setRoleAsLearner();
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const StudentApp() )));
             }, child: const Text("Login as Student"))
           ],

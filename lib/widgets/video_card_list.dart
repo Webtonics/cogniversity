@@ -1,5 +1,7 @@
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/student/course_lesson.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LessonList extends StatelessWidget {
   const LessonList({
@@ -10,6 +12,7 @@ class LessonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isEducator = context.watch<RoleProvider>().isEducator;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -34,9 +37,12 @@ class LessonList extends StatelessWidget {
                 Icons.play_circle,
                 size: 40,
               ),
-              title: Text("Title $index"),
-              subtitle: Text("This is the description of $index"),
-            )),
+              title: Text("Title $index", maxLines: 1,),
+              subtitle: Text("This is the description of $index",maxLines: 1,),
+              trailing: isEducator ? IconButton(onPressed: (){
+                // action to Delete 
+              }, icon: const Icon(Icons.delete),): const Text("")
+            ),),
       ),
     );
   }

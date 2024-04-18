@@ -1,6 +1,7 @@
 import 'package:cogniversity/views/teacher/inner/add_course.dart';
 import 'package:cogniversity/widgets/course_carosel.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
+import 'package:cogniversity/widgets/my_action_button.dart';
 import 'package:cogniversity/widgets/my_appbar.dart';
 import 'package:cogniversity/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
@@ -52,9 +53,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Center(child: Text("Your Courses",style: Theme.of(context).textTheme.titleMedium,)),
-                          ElevatedButton.icon(onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const AddNewCourse())));
-                          }, icon: Icon(Icons.add), label:Text(" Add course"))
+                          const MyActionButton( icon: Icons.add, title: "Add Course",page: AddNewCourse(), )
                         ],
                       ),
                     ),
@@ -78,3 +77,4 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
     );
   }
 }
+
