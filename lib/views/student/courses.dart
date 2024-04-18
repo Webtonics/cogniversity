@@ -3,8 +3,8 @@ import 'package:cogniversity/widgets/course_carosel.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:flutter/material.dart';
 
-class Courses extends StatelessWidget {
-  const Courses({super.key});
+class CoursesView extends StatelessWidget {
+  const CoursesView({super.key});
 
   @override
   Widget build(BuildContext context) {

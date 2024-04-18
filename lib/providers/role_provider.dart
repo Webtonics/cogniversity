@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 
-// class Role extends ChangeNotifierProvider {
-//   int role = 0;
-
-//   Role({required super.create});
-
-//   void changeRole(){
-//     role = 1;
-    
-//   }
+class RoleProvider with ChangeNotifier {
   
-  
-// }
+  bool isEducator = true;
 
-
-class Role extends ChangeNotifier{
-  int role = 0;
-
-  void changeRole(){
-    role = 1;
-    
+  setRoleAsEducator(){
+    isEducator = true; 
+    notifyListeners();
   }
-  
+
+  setRoleAsLearner(){
+    isEducator = false;
+    notifyListeners();
+  }
 }

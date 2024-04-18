@@ -1,4 +1,5 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
 import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
@@ -6,6 +7,7 @@ import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetails extends StatefulWidget {
   const CourseDetails({super.key, required this.courseName});
@@ -19,9 +21,12 @@ class _CourseDetailsState extends State<CourseDetails> {
   
   @override
   Widget build(BuildContext context) {
+
+    bool isEducator = context.watch<RoleProvider>().isEducator;
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        title: isEducator ? const Text("Educator"): const Text("learner"),
       ),
     body: 
      SafeArea(

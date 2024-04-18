@@ -2,14 +2,14 @@ import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:flutter/material.dart';
 
-class EssayQuiz extends StatefulWidget {
-  const EssayQuiz({super.key});
+class MultichoiceQuiz extends StatefulWidget {
+  const MultichoiceQuiz({super.key});
 
   @override
-  State<EssayQuiz> createState() => _EssayQuizState();
+  State<MultichoiceQuiz> createState() => _MultichoiceQuizState();
 }
 
-class _EssayQuizState extends State<EssayQuiz> {
+class _MultichoiceQuizState extends State<MultichoiceQuiz> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -23,6 +23,7 @@ class _EssayQuizState extends State<EssayQuiz> {
             //Question
            const Expanded(child: TextField(decoration: InputDecoration( border: OutlineInputBorder(),label: Text("Question"), helperText: "What is the first city to be freed"), maxLines: 6,)),
            //Textbox
+           
            const MySpacer(height: 7,),
            MyElevattedButton(title: "Submit", action: (){
               //

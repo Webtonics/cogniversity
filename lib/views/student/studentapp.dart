@@ -19,7 +19,7 @@ class _StudentAppState extends State<StudentApp> {
 
   List<Widget>views = const[
     StudentHome(),
-    Courses(),
+    CoursesView(),
     Notificationview(),
     ProfileView(),
   ];

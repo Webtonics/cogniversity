@@ -3,9 +3,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // // import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:flutter/foundation.dart';
-// import 'package:skilloom/Services/authservice/auth_exception.dart';
-// import 'package:skilloom/Services/storageservice/storage_service.dart';
-// import 'package:skilloom/models/user_model.dart' as model;
 
 // class AuthService {
 //   final FirebaseAuth _auth = FirebaseAuth.instance;

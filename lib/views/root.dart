@@ -1,6 +1,8 @@
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({super.key});
@@ -38,6 +40,9 @@ class _RootAppState extends State<RootApp> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(onPressed: (){
+                        //provider State management
+                        context.read<RoleProvider>().setRoleAsEducator();
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp(tab: 0,))));
                       },icon: const Icon(Icons.person_2),label:const Text("Educator"), style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14),),
@@ -53,6 +58,10 @@ class _RootAppState extends State<RootApp> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(onPressed: (){
+
+                        //provider State management
+                        context.read<RoleProvider>().setRoleAsLearner();
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const StudentApp())));
                       },icon: const Icon(Icons.people_rounded),label:const Text("Student"),style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14),),

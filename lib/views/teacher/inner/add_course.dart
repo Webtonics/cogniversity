@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/views/teacher/inner/congratulation_view.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/textfield.dart';
@@ -13,19 +16,27 @@ class AddNewCourse extends StatefulWidget {
 class _AddNewCourseState extends State<AddNewCourse> {
   int currentstep = 0;
    ScrollController scrollController = ScrollController();
-   TextEditingController textEditingController = TextEditingController();
+   TextEditingController _titleController = TextEditingController();
+   TextEditingController _descriptionController = TextEditingController();
+   
 
   @override
   void initState() {
     scrollController= ScrollController();
-    textEditingController = TextEditingController();
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
     super.initState();
   }
   @override
   void dispose() {
     scrollController.dispose();
-    textEditingController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
+  }
+
+  addCourse()async{
+    await FirestoreService().addCourse("${Random(40)}", _titleController.text, _descriptionController.text, "${Random(40)}");
   }
 
   @override
@@ -70,7 +81,10 @@ class _AddNewCourseState extends State<AddNewCourse> {
                 
         
                 if (islast) {
+                 addCourse();
+                 const SnackBar(content: Text("Couse added successfully"));
                   //Show congrats
+
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const CongratulationView()));
                 }else{
                   setState(() {
@@ -108,9 +122,9 @@ class _AddNewCourseState extends State<AddNewCourse> {
         child: Column(
                   children: [
                     const Text("Basic"),
-                    MyTextField(controller: textEditingController, label: "Title", hinttext: "VTE 101", keyboardtype: TextInputType.text, enabled: true, maxlines: 1,),
+                    MyTextField(controller: _titleController, label: "Title", hinttext: "VTE 101", keyboardtype: TextInputType.text, enabled: true, maxlines: 1,),
                     const MySpacer(height: 5,),
-                    MyTextField(controller: textEditingController, label: "Brief Description", hinttext: "VTE 101", keyboardtype: TextInputType.text, enabled: true, maxlines: 5,),
+                    MyTextField(controller: _descriptionController, label: "Brief Description", hinttext: "VTE 101", keyboardtype: TextInputType.text, enabled: true, maxlines: 5,),
                     const MySpacer(height: 5,),
                     const Text("Add Cover Image   (Optional)"),
                     Container(
