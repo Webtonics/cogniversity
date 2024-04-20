@@ -14,18 +14,12 @@ class _CoursesViewState extends State<CoursesView> {
 
   // int currentTab = 0;
   List<Widget>tabs = [
-    Tab( text: "In Progress", child: const CoursesDefaultView(), ),
-    Tab(text: "Downloaded",child: const CoursesDefaultView(),)
+    const Tab( text: "In Progress", ),
+    const Tab(text: "Downloaded",)
   ];
 
   List<Widget>views = [const CoursesDefaultView(), const CoursesDefaultView() ];
-  // final TabController _tabController = TabController(length: 3, vsync:NavigatorState());
-
-  // @override
-  // void dispose() {
-  //   _tabController.dispose();
-  //   super.dispose();
-  // }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +27,11 @@ class _CoursesViewState extends State<CoursesView> {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        appBar: AppBar(
-           bottom: TabBar(tabs: tabs),
-        )
+        // appBar: AppBar(
+        //    bottom: TabBar(tabs: tabs),
+        // ),
+        appBar: TabBar(tabs: tabs),
+        body: TabBarView(children: views),
       ),
     );
   }

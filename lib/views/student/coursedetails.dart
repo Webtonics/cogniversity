@@ -102,7 +102,12 @@ class _CourseDetailsState extends State<CourseDetails> {
                       "Lessons",style:  TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
                      ),
                 
-                    isEducator? const MyActionButton(page: AddLessonView(), icon: Icons.add, title: "Add Lesson"): Container(),
+                    isEducator? const MyActionButton(page: AddLessonView(), icon: Icons.add, title: "Add Lesson")
+                    :ElevatedButton.icon(onPressed: (){
+
+                      //Action to download
+
+                    }, icon: const Icon(Icons.download), label: const Text("Download")),
                 
                    ],
                                ),
