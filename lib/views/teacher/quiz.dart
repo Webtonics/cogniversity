@@ -1,7 +1,9 @@
+import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/teacher/inner/add_quiz.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/quizcard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LecturerQuiz extends StatefulWidget {
   const LecturerQuiz({super.key});
@@ -13,6 +15,8 @@ class LecturerQuiz extends StatefulWidget {
 class _LecturerQuizState extends State<LecturerQuiz> {
   @override
   Widget build(BuildContext context) {
+    bool isEducator = context.watch<RoleProvider>().isEducator;
+
     return   Scaffold(
       body: SafeArea(
         child: Padding(
@@ -26,9 +30,11 @@ class _LecturerQuizState extends State<LecturerQuiz> {
               const MySpacer(height: 7,),
               Container(
                 alignment: Alignment.topRight,
-                child: ElevatedButton.icon(onPressed: (){
+                child: isEducator? ElevatedButton.icon(onPressed: (){
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AddQuiz(editing: false)));
-                }, icon: const Icon(Icons.add), label: const Text("Add Quiz"))
+                }, icon: const Icon(Icons.add), label: const Text("Add Quiz")): Container(
+                  height: 10,
+                )
               ),
               const MySpacer(height: 7,),
               Expanded(
@@ -36,6 +42,7 @@ class _LecturerQuizState extends State<LecturerQuiz> {
                   itemCount: 6,
                   itemBuilder: (context, index){
                     return const QuizCard();
+                    
                 },),
               )
             ],

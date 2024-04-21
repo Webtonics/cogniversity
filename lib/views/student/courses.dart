@@ -27,9 +27,6 @@ class _CoursesViewState extends State<CoursesView> {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        // appBar: AppBar(
-        //    bottom: TabBar(tabs: tabs),
-        // ),
         appBar: TabBar(tabs: tabs),
         body: TabBarView(children: views),
       ),

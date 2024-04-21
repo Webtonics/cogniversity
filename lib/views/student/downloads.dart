@@ -21,3 +21,4 @@ class _DownloadViewState extends State<DownloadView> {
     );
   }
 }
+
