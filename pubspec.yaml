@@ -45,6 +45,9 @@ dependencies:
   url_launcher: ^6.2.4
   image_picker: ^1.0.8
   file_picker: ^8.0.0+1
+  video_player: ^2.8.5
+  smooth_page_indicator: ^1.1.0
+  
   
   
 
@@ -54,9 +57,15 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.7
+
+flutter_native_splash:
+  # image: assets/logo.png
+  background_image: assets/splash.png
 
 flutter_launcher_icons:
   android: true
+    
   web:
     generate: true
     image_path: "assets/logo.png"

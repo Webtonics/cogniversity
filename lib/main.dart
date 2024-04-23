@@ -1,5 +1,6 @@
 import 'package:cogniversity/firebase_options.dart';
 import 'package:cogniversity/providers/role_provider.dart';
+import 'package:cogniversity/views/intro/onboarding/onboarding.dart';
 import 'package:cogniversity/views/responsive/responsive_engine.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +56,8 @@ class Authuser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ResponsiveEngine();
-    // return const StudentHome();
+    // return const ResponsiveEngine();
+    return const OnboardingView();
   }
 }
 

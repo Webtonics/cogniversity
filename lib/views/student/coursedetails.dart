@@ -1,6 +1,7 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
+import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/inner/add_lesson.dart';
 // import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
@@ -80,10 +81,16 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ),
                   // Cards( title: "Enrolled", icon: Icons.people,),
                   //Quiz
-                  GestureDetector
+                  isEducator? GestureDetector
                   (
                     onTap: () {
                       Navigator.of( context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp(tab: 1))));
+                    },
+                    child: const Cards( title: "Quiz", icon: Icons.quiz_rounded,)):
+                    GestureDetector
+                  (
+                    onTap: () {
+                      Navigator.of( context).pushReplacement(MaterialPageRoute(builder: ((context) => const StudentApp())));
                     },
                     child: const Cards( title: "Quiz", icon: Icons.quiz_rounded,)),
                   //share code

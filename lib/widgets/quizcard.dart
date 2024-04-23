@@ -27,12 +27,13 @@ class QuizCard extends StatelessWidget {
       )
     );
      }else{
-      return const Card(
+      return  Card(
       child:Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: ListTile(
-          leading: CircleAvatar( backgroundColor: Colors.deepOrange,),
-          title: Text("Gsp 101 essay"),
+          leading: const CircleAvatar( backgroundColor: Colors.deepOrange,),
+          title: const Text("Gsp 101 essay"),
+          trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.remove_red_eye)),
         ),
       )
     );
