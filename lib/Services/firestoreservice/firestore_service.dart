@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:cogniversity/models/courses.dart';
 // import 'package:cogniversity/views/student/courses.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //get all courses
@@ -37,7 +35,7 @@ class FirestoreService {
 
 //get courses
 Stream<QuerySnapshot<Map<String,dynamic>>>getallCoursesn() {
-  String res = "Success";
+  // String res = "Success";
  
   Stream<QuerySnapshot<Map<String,dynamic>>> documentSnapshot =  _firestore.collection('course').snapshots();
 

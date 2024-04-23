@@ -30,6 +30,7 @@ class _RootAppState extends State<RootApp> {
           padding: smallwidth > 300? const EdgeInsets.all(0):const EdgeInsets.all(10.0),
           // ignore: sized_box_for_whitespace
           child: Container(
+            color:Colors.white,
             width: double.infinity,
             child: Center(
               child: Row(

@@ -1,5 +1,6 @@
 import 'package:cogniversity/views/root.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -77,17 +78,18 @@ class _OnboardingViewState extends State<OnboardingView> {
     // );
     return Scaffold(
       body: Container(
-        // padding: const EdgeInsets.only(bottom: 80),
+        padding: const EdgeInsets.only(bottom: 80),
         child: 
             PageView(
-              
+               
               controller: pageController,
-              children: [
-              OnboardingPage(pageController: pageController, color: Colors.deepOrange, widget: const Center(child: Text("data"),),),
-              OnboardingPage(pageController: pageController, color: Colors.deepPurple, widget: const Center(child: Text("data"),),),
-              OnboardingPage(pageController: pageController, color: Colors.deepOrangeAccent, widget: const Center(child: Text("data"),),),
+              children:pages
+              //  [
+              // OnboardingPage(pageController: pageController, color: Colors.deepOrange, widget: const Center(child: Text("data"),),),
+              // OnboardingPage(pageController: pageController, color: Colors.deepPurple, widget: const Center(child: Text("data"),),),
+              // OnboardingPage(pageController: pageController, color: Colors.deepOrangeAccent, widget: const Center(child: Text("data"),),),
             
-              ]
+              // ]
             ),
             
         ),
@@ -105,6 +107,9 @@ class _OnboardingViewState extends State<OnboardingView> {
               ElevatedButton(onPressed: (){
                 pageController.previousPage(duration: Duration.zero, curve:Curves.bounceIn);
               }, child: const Text("Back")),
+
+              Center(child: SmoothPageIndicator(controller: pageController, 
+              effect: const WormEffect(dotHeight: 10, dotWidth: 10),count: pages.length)),
               ElevatedButton(onPressed: (){
                 pageController.nextPage(duration: Duration.zero, curve:Curves.bounceIn);
               }, child: const Text("Next")
@@ -145,9 +150,15 @@ class Pageview1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
       // color: Colors.deepOrange,
-      child: ElevatedButton(onPressed: (){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
-      }, child: const Text("Proceed")) ,
+      child: Column(
+        children: [
+          Center(
+            child: ElevatedButton(onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
+            }, child: const Text("Proceed")),
+          ),
+        ],
+      ) ,
     );
   }
 }

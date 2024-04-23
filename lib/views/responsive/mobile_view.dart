@@ -1,5 +1,5 @@
 import 'package:cogniversity/views/intro/onboarding/onboarding.dart';
-import 'package:cogniversity/views/root.dart';
+// import 'package:cogniversity/views/root.dart';
 import 'package:flutter/material.dart';
 
 class Mobileview extends StatelessWidget {
