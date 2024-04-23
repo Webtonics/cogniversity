@@ -28,9 +28,15 @@ class _OnboardingViewState extends State<OnboardingView> {
     const Pageview1()
     
   ];
-  // int currentpage = 0;
 
-  
+  bool isLast = false ;
+  bool isFirst = true;
+
+  back(){
+    setState(() {
+      isLast= true;
+    });
+  }
 
   @override
   void initState() {
@@ -38,11 +44,11 @@ class _OnboardingViewState extends State<OnboardingView> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   pageController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     // return Container(
@@ -84,12 +90,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                
               controller: pageController,
               children:pages
-              //  [
-              // OnboardingPage(pageController: pageController, color: Colors.deepOrange, widget: const Center(child: Text("data"),),),
-              // OnboardingPage(pageController: pageController, color: Colors.deepPurple, widget: const Center(child: Text("data"),),),
-              // OnboardingPage(pageController: pageController, color: Colors.deepOrangeAccent, widget: const Center(child: Text("data"),),),
-            
-              // ]
+              
             ),
             
         ),
@@ -104,15 +105,31 @@ class _OnboardingViewState extends State<OnboardingView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(onPressed: (){
-                pageController.previousPage(duration: Duration.zero, curve:Curves.bounceIn);
-              }, child: const Text("Back")),
+              isLast? ElevatedButton(onPressed: (){
+                pageController.previousPage(duration: const Duration( seconds: 1), curve:Curves.linear);
+                setState(() {
+                  isFirst = false;
+                });
+              }, child: const Text("Back")): ElevatedButton(onPressed: (){
+                
+                pageController.jumpToPage(3);
+                back();
+              }, child: const Text("Skip")),
 
-              Center(child: SmoothPageIndicator(controller: pageController, 
+              Center(child: SmoothPageIndicator(controller: pageController,
+              onDotClicked: (index) {
+                pageController.animateToPage(index, duration: const Duration( seconds: 1), curve:Curves.easeIn);
+              }, 
               effect: const WormEffect(dotHeight: 10, dotWidth: 10),count: pages.length)),
-              ElevatedButton(onPressed: (){
-                pageController.nextPage(duration: Duration.zero, curve:Curves.bounceIn);
-              }, child: const Text("Next")
+              
+              
+              isLast == false? ElevatedButton(onPressed: (){
+                pageController.nextPage(duration: const Duration( seconds: 1), curve:Curves.linear);
+              }, child: const Text("Next"),
+              ):
+               ElevatedButton(onPressed: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
+              }, child: const Text("Finish"),
               )
             ]
               ),
@@ -150,14 +167,18 @@ class Pageview1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
       // color: Colors.deepOrange,
-      child: Column(
-        children: [
-          Center(
-            child: ElevatedButton(onPressed: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
-            }, child: const Text("Proceed")),
-          ),
-        ],
+      
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Center(
+              child: ElevatedButton(onPressed: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
+              }, child: const Text("Get Started")),
+            ),
+          ],
+        ),
       ) ,
     );
   }
