@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:cogniversity/models/courses.dart';
@@ -47,15 +48,35 @@ Stream<QuerySnapshot<Map<String, dynamic>>> getVideo(String courseId) {
 //   );
 // }
 Future<void> enrollStudent( String courseId) async {
-  // Add a document to the enrolledStudents collection
-  await _firestore.collection('enrolledStudents').add({
-    'userId': userId,
-    'courseId': courseId,
-  });
+  // Check for existing enrollment
+  final snapshot = await _firestore
+      .collection('enrolledStudents')
+      .where('userId', isEqualTo: userId)
+      .where('courseId', isEqualTo: courseId)
+      .get();
+
+  if (snapshot.docs.isEmpty) {
+    // No existing enrollment, add a new document
+    await _firestore.collection('enrolledStudents').add({
+      'userId': userId,
+      'courseId': courseId,
+    });
+  } else {
+    // Enrollment already exists, handle potential error or message
+    throw AlreadyEnrolledException();// Or show user a message
+  }
 }
+// Future<void> enrollStudent( String courseId) async {
+//   await isEnrolled(userId, courseId);
+//   // Add a document to the enrolledStudents collection
+//   await _firestore.collection('enrolledStudents').add({
+//     'userId': userId,
+//     'courseId': courseId,
+//   });
+// }
 
 //Checking enrollment status:
-Future<bool> isEnrolled(String userId, String courseId) async {
+Future<bool> isEnrolled( String courseId) async {
   // Query the enrolledStudents collection
   final snapshot = await _firestore
       .collection('enrolledStudents')
@@ -67,15 +88,29 @@ Future<bool> isEnrolled(String userId, String courseId) async {
   return snapshot.docs.isNotEmpty;
 }
 
-Future<int> getEnrolledUserCount(String courseId) async {
-  final snapshot = await _firestore
+
+// Stream<int> getEnrolledUserCountStream(String courseId) {
+//    Stream<int> count = _firestore
+//       .collection('enrolledStudents')
+//       .where('courseId', isEqualTo: courseId)
+//       .snapshots()
+//       .map((snapshot) => snapshot.docs.length); 
+//     print(count);
+//     return count;
+
+// }
+Stream<int> getEnrolledUsersCountStream(String courseId) {
+  return _firestore
       .collection('enrolledStudents')
       .where('courseId', isEqualTo: courseId)
-      .get();
-
-  return snapshot.docs.length;
+      .snapshots()
+      .map((snapshot) {
+        print("Emitted data: ${snapshot.docs.length}"); // Add this line
+        return snapshot.docs.length;
+      });
 }
 
+  void getEnrolledUserCountStream(String courseId) {}
 
 }
 

@@ -1,4 +1,5 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
+import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
@@ -7,6 +8,7 @@ import 'package:cogniversity/views/teacher/inner/add_lesson.dart';
 // import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
+import 'package:cogniversity/widgets/error_dialog.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/my_action_button.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
@@ -24,12 +26,31 @@ class CourseDetails extends StatefulWidget {
 }
 
 class _CourseDetailsState extends State<CourseDetails> {
-   bool enrolled = false;
+  //  bool enrolled = false;
 
    enrollUser(){
-    return FirestoreService().enrollStudent( widget.courseId);
+    try {
+      return FirestoreService().enrollStudent( widget.courseId);
+    } on AlreadyEnrolledException{
+       showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: " Already Enrolled",
+              content: "You Have Already Enrolled",
+            );
+          });
+    }
    }
   
+    isEnrolled(){
+    return FirestoreService().isEnrolled(widget.courseId);
+    }
+
+    getEnrolledUsersCount(){
+      FirestoreService().getEnrolledUserCountStream(widget.courseId);
+    }
+
   @override
   Widget build(BuildContext context) {
 
@@ -71,22 +92,36 @@ class _CourseDetailsState extends State<CourseDetails> {
                   //materials
                   GestureDetector(onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MaterialsView())),child: const Cards( title: "Materials", icon: Icons.notes,)),
                   //Enrolled
-                  Container(
+                  // Container(
                     
-                    decoration: BoxDecoration(color: Colors.amberAccent, border: Border.all(style: BorderStyle.none) , borderRadius: BorderRadius.circular(12)),
-                    child: 
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          // Icon(Icons.)
-                          Text("0", style: TextStyle( fontSize: 23),),
-                          MySpacer(height: 3,),
-                          Text("Enrolled", style: TextStyle( fontSize: 13),),
-                        ],
-                      ),
-                    ),
-                  ),
+                  //   decoration: BoxDecoration(color: Colors.amberAccent, border: Border.all(style: BorderStyle.none) , borderRadius: BorderRadius.circular(12)),
+                  //   child: 
+                  //    Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: Column(
+                  //       children: [
+                  //         // Icon(Icons.)
+                  //         StreamBuilder(
+                  //           stream: getEnrolledUsersCount(),
+                  //           builder: (context, snapshot) {
+                  //            if (snapshot.connectionState == ConnectionState.active) {
+                  //              if (snapshot.hasData) {
+                  //             final count = snapshot.data!;
+                  //               return  Text(count.toString(), style: const TextStyle( fontSize: 23),);
+                  //            }else{
+                  //                return const Text("0", style: TextStyle( fontSize: 23),);
+                  //            }
+                  //            }else{
+                  //             return Text("00");
+                  //            }
+                  //           }
+                  //         ),
+                  //         const MySpacer(height: 3,),
+                  //         const Text("Enrolled", style: TextStyle( fontSize: 13),),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // Cards( title: "Enrolled", icon: Icons.people,),
                   //Quiz
                   isEducator? GestureDetector
@@ -131,7 +166,13 @@ class _CourseDetailsState extends State<CourseDetails> {
 
               //  LessonList(index: index)
 
-             (isEducator || enrolled == true) ? Padding(   //Using provider to handle state of lecturer
+              FutureBuilder(future: isEnrolled(), 
+              builder: ((context, snapshot) {
+                
+                if (snapshot.hasData) {
+                  final isUserEnrolled = snapshot.data!;
+
+                   return (isEducator || isUserEnrolled == true) ? Padding(   //Using provider to handle state of lecturer
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                         height: 400,
@@ -148,20 +189,79 @@ class _CourseDetailsState extends State<CourseDetails> {
                     height: 200,
                     child: const Center(
                       child: Text("Enroll to see Courses", style: TextStyle(fontWeight: FontWeight.bold),),
-                    ),),
+                    ),);                
+                }else{
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 70,
+                      child: const CircularProgressIndicator()),
+                  );
+                }
+              }),
+              ),
+              const MySpacer(height: 15,),
+                
+              // Visibility(
+              //   visible: ,
+              //   child: 
+              //     
+              //   )
 
-                const MySpacer(height: 15,),
-
-             !isEducator | enrolled  ? MyElevattedButton(
+            FutureBuilder<bool>(
+            future: isEnrolled(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final isUserEnrolled = snapshot.data!;
+                return Visibility(
+                  visible: !isUserEnrolled, // Hide if enrolled
+                  child: MyElevattedButton(
                       title: "Enroll",
                       color: Colors.black,
                       action: () {
                         enrollUser();
                       //  setState(() {
                       //    enrolled = true;
-                      //  });
+                       })
+                );
+              } else {
+                return const CircularProgressIndicator(); // Show loading indicator
+              }
+            },
+          )
 
-                      }): Container()
+            //  (isEducator || isEnrolled() == true) ? Padding(   //Using provider to handle state of lecturer
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Container(
+            //             height: 400,
+            //             // height: double.maxFinite,
+            //             child: ListView.builder(
+            //                 itemCount: 10,
+            //                 itemBuilder: ((context, index) {
+            //                   return LessonList(
+            //                     index: index,
+            //                   );
+            //                 }))),
+            //       ): Container(
+            //         decoration: BoxDecoration( borderRadius: BorderRadius.circular(12),color: Colors.pink[100],),
+            //         height: 200,
+            //         child: const Center(
+            //           child: Text("Enroll to see Courses", style: TextStyle(fontWeight: FontWeight.bold),),
+            //         ),),
+
+            //     const MySpacer(height: 15,),
+
+            //  !isEducator | isEnrolled() ==  ? MyElevattedButton(
+            //           title: "Enroll",
+            //           color: Colors.black,
+            //           action: () {
+            //             enrollUser();
+            //           //  setState(() {
+            //           //    enrolled = true;
+            //           //  });
+
+            //           }): Container()
                   
             ],
           ),
