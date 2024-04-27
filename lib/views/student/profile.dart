@@ -1,10 +1,11 @@
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cogniversity/Services/authservice/user_services.dart';
+import 'package:cogniversity/main.dart';
 // import 'package:cogniversity/main.dart';
 import 'package:cogniversity/models/user_model.dart';
 // import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/providers/user_provider.dart';
-import 'package:cogniversity/views/student/studentapp.dart';
+// import 'package:cogniversity/views/student/studentapp.dart';
 // import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
@@ -83,8 +84,8 @@ class _ProfileViewState extends State<ProfileView> {
                           controller: _usernameController,
                           label: "Change Username",
 
-                          // hinttext: user.displayName,
-                          hinttext: "Emmanuel",
+                          hinttext: user.displayName,
+                          
                           keyboardtype: TextInputType.text,
                           enabled: updateuser,
                         ),
@@ -96,7 +97,7 @@ class _ProfileViewState extends State<ProfileView> {
                           // label: "",
 
                           // hinttext: user.email,
-                          hinttext: "Ucezema2002@gmail.com",
+                          hinttext: user.email,
                           keyboardtype: TextInputType.emailAddress,
                           enabled: updateuser,
                         ),
@@ -131,7 +132,7 @@ class _ProfileViewState extends State<ProfileView> {
                     onPressed: () {
                       AuthService().signout();
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: ((context) => const StudentApp())));
+                          builder: ((context) => const Authuser())));
                     },
                     icon: const Icon(Icons.logout))
               ],

@@ -1,4 +1,5 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
+import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
 import 'package:cogniversity/views/student/studentapp.dart';
@@ -9,18 +10,25 @@ import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/my_action_button.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CourseDetails extends StatefulWidget {
-  const CourseDetails({super.key, required this.courseName});
+  const CourseDetails({super.key, required this.courseName, required this.thumbnail, required this.courseId});
   final String courseName;
+  final String thumbnail;
+  final String courseId;
   @override
   State<CourseDetails> createState() => _CourseDetailsState();
 }
 
 class _CourseDetailsState extends State<CourseDetails> {
    bool enrolled = false;
+
+   enrollUser(){
+    return FirestoreService().enrollStudent( widget.courseId);
+   }
   
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 alignment: Alignment.bottomCenter,
                height: 300,
                width: double.infinity,
-               decoration: const BoxDecoration( image: DecorationImage(fit: BoxFit.cover,image: NetworkImage("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xhc3N8ZW58MHx8MHx8fDA%3D"))
+               decoration:  BoxDecoration( image: DecorationImage(fit: BoxFit.cover,image: NetworkImage(widget.thumbnail))
                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end ,
@@ -148,9 +156,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                       title: "Enroll",
                       color: Colors.black,
                       action: () {
-                       setState(() {
-                         enrolled = true;
-                       });
+                        enrollUser();
+                      //  setState(() {
+                      //    enrolled = true;
+                      //  });
+
                       }): Container()
                   
             ],

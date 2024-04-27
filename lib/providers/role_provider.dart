@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class RoleProvider with ChangeNotifier {
   
-  bool isEducator = true;
+  bool isEducator = false;
 
   setRoleAsEducator(){
     isEducator = true; 

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/views/student/coursedetails.dart';
 import 'package:flutter/material.dart';
@@ -20,25 +21,63 @@ class _CourseCaroselState extends State<CourseCarosel> {
     getCourses();
   }
   
-  getCourses()async{
-    await FirestoreService().getallCoursesn();
+  getCourses(){
+    // await FirestoreService().getallCoursesn();
+    FirestoreService().getallCourses();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        itemCount: 10,
-        scrollDirection: widget.direction,
-        itemBuilder: ((context, index) {
-          return GestureDetector(
-            onTap: () { 
-              // getCourses();
-              Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>  const CourseDetails(courseName: ' GSP 101- Use of English',))));
-        },
-        child: const CourseCardItem(title:"VTE 101" , description:"Wowwoowwo" ,));
-      })));
+    return StreamBuilder(
+      stream: FirestoreService().getallCourses(),
+      builder: (context, AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          
+          if (snapshot.hasData) {
+
+            return SizedBox(
+            height: 200,
+            child: ListView.builder(
+              
+              itemCount: snapshot.data!.docs.length,
+              scrollDirection: widget.direction,
+              itemBuilder: ((context, index) {
+                final String  id = snapshot.data!.docs[index].id ;
+                final String  title = snapshot.data!.docs[index].data()['title'] ;
+                final String  description = snapshot.data!.docs[index].data()['description'] ;
+                final String  thumbnail = snapshot.data!.docs[index].data()['thumbnail'] ;
+                return GestureDetector(
+                  onTap: () { 
+                    // getCourses();
+                    Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>   CourseDetails(courseName: title, thumbnail: thumbnail, courseId: id,))));
+              },
+              child:  CourseCardItem(title:title , description:description, imageUrl: thumbnail,));
+          })));
+          
+          }
+          else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Container(child:  Text(snapshot.error.toString()),);
+          }else{
+            // return const CircularProgressIndicator();
+            return Container(child:  const Text("No data"));
+          }
+        }else{
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+
+            child: Container(
+              width: double.infinity,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.pink[100]
+              ),
+              child: const Center( child: CircularProgressIndicator(),)),
+          );
+          
+        }
+      }
+    );
   }
 }
 
@@ -46,9 +85,10 @@ class CourseCardItem extends StatelessWidget {
   final String description;
   
   final String title;
+  final String imageUrl;
 
   const CourseCardItem({
-    super.key, required this.description, required this.title,
+    super.key, required this.description, required this.title, required this.imageUrl,
   });
 
   @override
@@ -59,10 +99,10 @@ class CourseCardItem extends StatelessWidget {
         alignment: AlignmentDirectional.bottomCenter,
         height: 200,
         width: 280,
-        decoration: const BoxDecoration(
-          color:  Color.fromARGB(255, 40, 15, 84),
-          borderRadius: BorderRadius.all(Radius.circular(24)),
-          image: DecorationImage(fit: BoxFit.cover, opacity: 0.6,image: NetworkImage("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xhc3N8ZW58MHx8MHx8fDA%3D"))),
+        decoration:  BoxDecoration(
+          color:  const Color.fromARGB(255, 40, 15, 84),
+          borderRadius: const BorderRadius.all(Radius.circular(24)),
+          image: DecorationImage(fit: BoxFit.cover, opacity: 0.6,image: NetworkImage(imageUrl))),
         child:  Column(
           children: [
             Text(title, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
