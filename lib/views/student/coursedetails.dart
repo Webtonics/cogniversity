@@ -1,4 +1,5 @@
 // import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/providers/role_provider.dart';
@@ -48,7 +49,11 @@ class _CourseDetailsState extends State<CourseDetails> {
     }
 
     getEnrolledUsersCount(){
-      FirestoreService().getEnrolledUserCountStream(widget.courseId);
+      FirestoreService().getEnrolledUsersCountStream(widget.courseId);
+    }
+
+    getLessons(){
+      FirestoreService().getLessons(widget.courseId);
     }
 
   @override
@@ -174,22 +179,15 @@ class _CourseDetailsState extends State<CourseDetails> {
 
                    return (isEducator || isUserEnrolled == true) ? Padding(   //Using provider to handle state of lecturer
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        height: 400,
-                        // height: double.maxFinite,
-                        child: ListView.builder(
-                            itemCount: 10,
-                            itemBuilder: ((context, index) {
-                              return LessonList(
-                                index: index,
-                              );
-                            }))),
+                    child: CourseLessonList(widget: widget),
+
                   ): Container(
                     decoration: BoxDecoration( borderRadius: BorderRadius.circular(12),color: Colors.pink[100],),
                     height: 200,
                     child: const Center(
                       child: Text("Enroll to see Courses", style: TextStyle(fontWeight: FontWeight.bold),),
                     ),);                
+                    
                 }else{
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -268,6 +266,62 @@ class _CourseDetailsState extends State<CourseDetails> {
        ),
      ),
     );
+  }
+}
+
+class CourseLessonList extends StatefulWidget {
+  const CourseLessonList({
+    super.key,
+    required this.widget,
+  });
+
+  final CourseDetails widget;
+
+  @override
+  State<CourseLessonList> createState() => _CourseLessonListState();
+}
+
+class _CourseLessonListState extends State<CourseLessonList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 400,
+        // height: double.maxFinite,
+        child: StreamBuilder(
+          stream:FirestoreService().getLessons(widget.widget.courseId),
+          builder: (context, AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>> snapshot) {
+            // if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+              final snap = snapshot.data!;
+              
+              return ListView.builder(
+                itemCount: snap.docs.length,
+                itemBuilder: ((context, index) {
+                  final title = snap.docs[index].data()['title'];
+                  final description = snap.docs[index].data()['description'];
+                  return LessonList(
+                    index: index, title: title, description: description,
+                  );
+                }));
+              }
+
+              else if(!snapshot.hasData){
+                return Container( 
+                  decoration: BoxDecoration( color: Colors.pink[200]),
+                  height: 300,
+                  width: double.infinity,
+                  child: const Center(child: Text("No Lesson Videos Available")),);
+              }
+              else{
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            // }else{
+            //   const Center( child: Text("Waiting"),);
+            // }
+            
+            // return const Center( child: Text("Waiting Last"),);
+          }
+        ));
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:cogniversity/models/courses.dart';
 // import 'package:cogniversity/views/student/courses.dart';
 
@@ -40,13 +40,6 @@ Stream<QuerySnapshot<Map<String, dynamic>>> getVideo(String courseId) {
 }
 
 //Enroll student
-// Future<void>enrollStudent(String userId, String courseId)async{
-//   await _firestore.collection('courses').doc(courseId).update(
-//     {
-//       "studentEnrolled": userId,
-//     }
-//   );
-// }
 Future<void> enrollStudent( String courseId) async {
   // Check for existing enrollment
   final snapshot = await _firestore
@@ -110,7 +103,12 @@ Stream<int> getEnrolledUsersCountStream(String courseId) {
       });
 }
 
-  void getEnrolledUserCountStream(String courseId) {}
+Stream<QuerySnapshot<Map<String,dynamic>>>getLessons(String courseId){
+  Stream<QuerySnapshot<Map<String,dynamic>>> document = 
+  _firestore.collection('video')
+  .where('course', isEqualTo: courseId).snapshots();
 
+  return document;
 }
 
+}

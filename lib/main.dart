@@ -1,4 +1,5 @@
 import 'package:cogniversity/firebase_options.dart';
+import 'package:cogniversity/providers/lesson_provider.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/providers/user_provider.dart';
 import 'package:cogniversity/views/auth/login.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_)=> LessonProvider()),
         ChangeNotifierProvider(create: (_)=> UserProvider()),
         ChangeNotifierProvider(create: (_)=> RoleProvider()),
       ],
