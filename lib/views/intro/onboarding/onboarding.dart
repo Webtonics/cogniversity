@@ -14,18 +14,26 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   List<Widget> pages = [
     Container(
-      color: Colors.redAccent,
+      color: Colors.white54,
+      child: const Column(
+        children: [
+          Center(child: Text("data"),),
+        ],
+      ),
+    ),
+    Container(
+      color: Colors.pinkAccent,
       child: const Center(child: Text("data"),),
     ),
     Container(
-      color: Colors.deepPurple,
+      color: Colors.pink[200],
       child: const Center(child: Text("data"),),
     ),
     Container(
-      color: Colors.black,
+      color: Colors.pink[300],
       child: const Center(child: Text("data"),),
     ),
-    const Pageview1()
+    // const Pageview1()
     
   ];
 
@@ -102,7 +110,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         // padding: const EdgeInsets.all(12),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child: isLast == false? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               isLast? ElevatedButton(onPressed: (){
@@ -132,6 +140,15 @@ class _OnboardingViewState extends State<OnboardingView> {
               }, child: const Text("Finish"),
               )
             ]
+              ): Container(
+                height: 80,
+                child: Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom( minimumSize: const Size(double.infinity, double.infinity), backgroundColor: Colors.deepPurple,),
+                    onPressed: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
+                  }, child: const Text("Get Started", style: TextStyle(color: Colors.white))),
+                ),
               ),
         )
             ),
@@ -168,16 +185,20 @@ class Pageview1 extends StatelessWidget {
     return  Container(
       // color: Colors.deepOrange,
       
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Center(
-              child: ElevatedButton(onPressed: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
-              }, child: const Text("Get Started")),
-            ),
-          ],
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom( minimumSize: const Size(double.infinity, double.infinity), backgroundColor: Colors.deepPurple,),
+                  onPressed: (){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const RootApp())));
+                }, child: const Text("Get Started", style: TextStyle(color: Colors.white),)),
+              ),
+            ],
+          ),
         ),
       ) ,
     );

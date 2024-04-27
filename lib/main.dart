@@ -1,14 +1,20 @@
 import 'package:cogniversity/firebase_options.dart';
 import 'package:cogniversity/providers/role_provider.dart';
-import 'package:cogniversity/views/intro/onboarding/onboarding.dart';
+import 'package:cogniversity/providers/user_provider.dart';
+import 'package:cogniversity/views/auth/login.dart';
+// import 'package:cogniversity/views/intro/onboarding/onboarding.dart';
+// import 'package:cogniversity/views/responsive/responsive_engine.dart';
+// import 'package:cogniversity/views/root.dart';
+import 'package:cogniversity/views/student/studentapp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cogniversity/views/responsive/responsive_engine.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
@@ -22,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Provider(create: (_){ Role();}),
+        ChangeNotifierProvider(create: (_)=> UserProvider()),
         ChangeNotifierProvider(create: (_)=> RoleProvider()),
       ],
       child: MaterialApp(
@@ -50,14 +56,23 @@ class MyApp extends StatelessWidget {
 class Authuser extends StatelessWidget {
   const Authuser({super.key});
 
-  //funtion to auth user i.e on Authstatechange
-    //check user type {teacher, student}
-    //login to user app
-
   @override
   Widget build(BuildContext context) {
-    // return const ResponsiveEngine();
-    return const OnboardingView();
-  }
+    return StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), 
+    builder: (context,snapshot){
+      if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData) {
+            return const StudentApp();
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator(),);
+        }
+        return const LoginScreen();
+      });
+    }
+  
 }
 

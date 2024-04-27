@@ -1,29 +1,11 @@
+// import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cogniversity/Services/authservice/user_services.dart';
+// import 'package:cogniversity/main.dart';
+import 'package:cogniversity/models/user_model.dart';
+// import 'package:cogniversity/providers/role_provider.dart';
+import 'package:cogniversity/providers/user_provider.dart';
+import 'package:cogniversity/views/student/studentapp.dart';
 // import 'package:cogniversity/views/teacher/teacherapp.dart';
-// import 'package:flutter/material.dart';
-
-// class ProfileView extends StatelessWidget {
-//   const ProfileView({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return  Scaffold(
-//       body: SafeArea(
-//         child: Column(
-//           children: [
-//             const Center(child: Text("Profile View"),),
-//             ElevatedButton(onPressed: (){
-//               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp() )));
-//             }, child: const Text("Start Teaching"))
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cogniversity/providers/role_provider.dart';
-import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/textfield.dart';
@@ -63,8 +45,8 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    // User? user = Provider.of<UserProvider>(context).getUser;
-    // if (user != null) {
+    User? user = context.watch<UserProvider>().getUser;
+    if (user != null) {
       return Scaffold(
         // backgroundColor: scaffoldColor,
         appBar: AppBar(
@@ -81,13 +63,14 @@ class _ProfileViewState extends State<ProfileView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 60,
 
                   
                   // profile image
-                  // backgroundImage: NetworkImage(user.photoURL),
-                  backgroundImage: CachedNetworkImageProvider("https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww")),
+                  backgroundImage: NetworkImage(user.photoURL),
+                  // backgroundImage: CachedNetworkImageProvider("https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww")
+                  ),
                 //username
               
                 const MySpacer(height: 7,),
@@ -138,17 +121,17 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
 
                 MySpacer(height: 7,),
-                MyElevattedButton(title: "Login as Educator", action: (){
-                  context.read<RoleProvider>().setRoleAsEducator();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp( tab: 0,) )));
-                }),
+                // MyElevattedButton(title: "Login as Educator", action: (){
+                //   context.read<RoleProvider>().setRoleAsEducator();
+                //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const TeacherApp( tab: 0,) )));
+                // }),
 
                 const MySpacer(height: 7,),
                 IconButton(
                     onPressed: () {
-                      // AuthService().signout();
-                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      //     builder: ((context) => const MyAppRoutes())));
+                      AuthService().signout();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: ((context) => const StudentApp())));
                     },
                     icon: const Icon(Icons.logout))
               ],
@@ -157,8 +140,8 @@ class _ProfileViewState extends State<ProfileView> {
         ),
       );
     } 
-    // else {
-    //   return const Center(child: CircularProgressIndicator());
-    // }
-  // }
+    else {
+      return const Center(child: CircularProgressIndicator());
+    }
+  }
 }

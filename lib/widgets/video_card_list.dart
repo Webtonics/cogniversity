@@ -1,6 +1,5 @@
 import 'package:cogniversity/providers/role_provider.dart';
-// import 'package:cogniversity/views/student/course_lesson.dart';
-import 'package:cogniversity/widgets/video.dart';
+import 'package:cogniversity/views/student/course_lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +17,9 @@ class LessonList extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: ((context) => const VideoApp()
-          //  const CourseLesson()
+          MaterialPageRoute(builder: ((context) => 
+          
+           const CourseLesson()
            )),
         ),
         child: Container(

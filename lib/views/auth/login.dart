@@ -1,8 +1,12 @@
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cogniversity/Services/authservice/auth_exception.dart';
+import 'package:cogniversity/Services/authservice/user_services.dart';
 import 'package:cogniversity/views/auth/forgot_password.dart';
 import 'package:cogniversity/views/auth/signup.dart';
 import 'package:cogniversity/widgets/error_dialog.dart';
+import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,13 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
-    // String email = _emailController.text;
-    // String password = _passwordController.text;
     setState(() {
       _isLoading = true;
     });
     try {
-      // await AuthService().signin(email, password);
+      await AuthService().signin(_emailController.text, _passwordController.text);
     } on UserNotFoundAuthException {
       showDialog(
           context: context,
@@ -118,7 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: 'Enter your password',
                 ),
               ),
+
               const SizedBox(height: 20.0),
+              
               _isLoading
                   ? ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -154,15 +158,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text("Signup"))
                 ],
               ),
-
+              //forgot Password
               Center(
                 child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ForgotPasswordScreen()));
+                          builder: (context) => const ForgotPasswordScreen()));
                     },
                     child: const Text("Forgot password")),
-              )
+              ),
+              const MySpacer(height: 10,),
+
             ],
           ),
         ),

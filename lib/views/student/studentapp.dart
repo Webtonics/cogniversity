@@ -1,9 +1,11 @@
 // import 'package:cogniversity/views/home.dart';
+import 'package:cogniversity/providers/user_provider.dart';
 import 'package:cogniversity/views/student/courses.dart';
 import 'package:cogniversity/views/student/home.dart';
 import 'package:cogniversity/views/student/notifications.dart';
 import 'package:cogniversity/views/student/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 ///first student view
@@ -16,6 +18,18 @@ class StudentApp extends StatefulWidget {
 
 class _StudentAppState extends State<StudentApp> {
   int current = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    addUserProvider();
+  }
+
+  addUserProvider() async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
+  }
 
   List<Widget>views = const[
     StudentHome(),

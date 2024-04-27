@@ -62,6 +62,7 @@ dev_dependencies:
 flutter_native_splash:
   # image: assets/logo.png
   background_image: assets/splash.png
+  # android_12: true
 
 flutter_launcher_icons:
   android: true

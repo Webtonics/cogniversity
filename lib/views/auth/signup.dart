@@ -1,9 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 // import 'package:cogniversity/Services/authservice/auth_exception.dart';
+import 'package:cogniversity/Services/authservice/auth_exception.dart';
+import 'package:cogniversity/Services/authservice/user_services.dart';
 import 'package:cogniversity/Services/uploader/uploader.dart';
+import 'package:cogniversity/main.dart';
 // import 'package:cogniversity/views/auth%20copy/forgot_password.dart';
 import 'package:cogniversity/views/auth/login.dart';
+import 'package:cogniversity/views/student/studentapp.dart';
+import 'package:cogniversity/widgets/error_dialog.dart';
 // import 'package:cogniversity/widgets/error_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,83 +29,83 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Uint8List? image;
   bool _isloading = false;
 
-  // void _signup() async {
-  //   // String username = _usernameController.text;
-  //   // String email = _emailController.text;
-  //   // String password = _passwordController.text;
-  //   // String res = "an error occured";
+  void _signup() async {
+    String username = _usernameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String res = "an error occured";
 
-  //   setState(() {
-  //     _isloading = true;
-  //   });
+    setState(() {
+      _isloading = true;
+    });
 
-  //   try {
-  //     // await AuthService().signup(username, email, "student", password, image!);
-  //     // res = "Success";
-  //   // ignore: duplicate_ignore
-  //   } on EmailAlreadyinUseAuthException {
+    try {
+      await AuthService().signup(username, email, "student", password, image!);
+      // res = "Success";
+    // ignore: duplicate_ignore
+    } on EmailAlreadyinUseAuthException {
       
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return const MyErrorDialog(
-  //             title: " Email Already in Use",
-  //             content:
-  //                 "The Email address you provided is associated with another account.",
-  //           );
-  //         });
-  //   } on InvalidEmailAuthException {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return const MyErrorDialog(
-  //             title: "Invalid Email",
-  //             content:
-  //                 "The Email address you provided is invalid. Try again with a correct email. Please try again",
-  //           );
-  //         });
-  //   } on MissingPasswordAuthException {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return const MyErrorDialog(
-  //             title: " Missing Password",
-  //             content: "The Password Field is missing please check again.",
-  //           );
-  //         });
-  //   } on WeakPasswordAuthException {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return const MyErrorDialog(
-  //             title: " Weak Password",
-  //             content:
-  //                 "The Password you provided is not Secure try a combination of 8 (Letters/symbols/numbers). Please try again",
-  //           );
-  //         });
-  //   } on GenericAuthException {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return const MyErrorDialog(
-  //             title: " Unexpected Error",
-  //             content:
-  //                 "This is an Unexpected error. Please restart the app or contact us in our handle",
-  //           );
-  //         });
-  //   }
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: " Email Already in Use",
+              content:
+                  "The Email address you provided is associated with another account.",
+            );
+          });
+    } on InvalidEmailAuthException {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: "Invalid Email",
+              content:
+                  "The Email address you provided is invalid. Try again with a correct email. Please try again",
+            );
+          });
+    } on MissingPasswordAuthException {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: " Missing Password",
+              content: "The Password Field is missing please check again.",
+            );
+          });
+    } on WeakPasswordAuthException {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: " Weak Password",
+              content:
+                  "The Password you provided is not Secure try a combination of 8 (Letters/symbols/numbers). Please try again",
+            );
+          });
+    } on GenericAuthException {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const MyErrorDialog(
+              title: " Unexpected Error",
+              content:
+                  "This is an Unexpected error. Please restart the app or contact us in our handle",
+            );
+          });
+    }
 
-  //   if (res == "Success") {
-  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  //         content: Text('Verification email sent. Please check your inbox.')));
-  //     Navigator.of(context).pushReplacement(
-  //         MaterialPageRoute(builder: (context) => const MyAppRoute()));
-  //   }
-  //   setState(() {
-  //     _isloading = false;
-  //   });
-  //   print(res);
-  // }
+    if (res == "Success") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Verification email sent. Please check your inbox.')));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const StudentApp()));
+    }
+    setState(() {
+      _isloading = false;
+    });
+    print(res);
+  }
 
   selectImage() async {
     Uint8List In = await pickimage(ImageSource.gallery);
@@ -167,33 +172,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 70)),
                   onPressed: () {
-                    // if (image != null && _usernameController.text.isNotEmpty) {
-                    //   _signup();
-                    // } else if (_usernameController.text.isEmpty) {
-                    //   showDialog(
-                    //       context: context,
-                    //       builder: (context) {
-                    //         return const MyErrorDialog(
-                    //           title: "Enter a Username",
-                    //           content:
-                    //               "You need to Enter your username to continue",
-                    //         );
-                    //       });
-                    // } else {
-                    //   if (kDebugMode) {
-                    //     print("Null input");
-                    //   }
-                    //   showDialog(
-                    //       context: context,
-                    //       builder: (context) {
-                    //         return const MyErrorDialog(
-                    //           title: "Upload a Profile picture",
-                    //           content:
-                    //               "You need to upload a profile picture to continue",
-                    //         );
-                          
-                    //       );
-                    // }
+                    if (image != null && _usernameController.text.isNotEmpty) {
+                      _signup();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const Authuser())));
+                    } else if (_usernameController.text.isEmpty) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const MyErrorDialog(
+                              title: "Enter a Username",
+                              content:
+                                  "You need to Enter your username to continue",
+                            );
+                          });
+                    } else {
+                      if (kDebugMode) {
+                        print("Null input");
+                      }
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const MyErrorDialog(
+                              title: "Upload a Profile picture",
+                              content:
+                                  "You need to upload a profile picture to continue",
+                            );
+                          }
+                          );
+                    }
                   },
                   
                   child: _isloading

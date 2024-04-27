@@ -24,7 +24,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
             children: [
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: MyAppBar(),
+                // child: MyAppBar(),
               ),
               const MySpacer(height: 7,),              
               //title

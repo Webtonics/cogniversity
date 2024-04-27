@@ -12,7 +12,7 @@ class TabletView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Text("Tablet view"),
+            // const Text("Tablet view"),
             Container(
               padding: const EdgeInsets.all(20),
               child: const RootApp(),

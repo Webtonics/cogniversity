@@ -68,5 +68,3 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 }
 
-class AuthService {
-}

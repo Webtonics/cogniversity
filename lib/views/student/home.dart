@@ -1,7 +1,10 @@
+import 'package:cogniversity/models/user_model.dart';
+import 'package:cogniversity/providers/user_provider.dart';
 import 'package:cogniversity/widgets/course_carosel.dart';
 import 'package:cogniversity/widgets/my_appbar.dart';
 import 'package:cogniversity/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
@@ -13,7 +16,9 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
-    return    Scaffold(
+    User? user = context.watch<UserProvider>().getUser;
+    if (user!= null){
+      return Scaffold(
       backgroundColor: const Color.fromARGB(255, 40, 15, 84),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -22,7 +27,7 @@ class _StudentHomeState extends State<StudentHome> {
               //row 1
 
               ///My app bar
-              const MyAppBar(),
+               MyAppBar(displayName: user.displayName, photoURL: user.photoURL,),
           
               const SizedBox(
                 height: 10,
@@ -66,6 +71,9 @@ class _StudentHomeState extends State<StudentHome> {
         ),
       ),
     );
+    }else{
+      return const Center(child: CircularProgressIndicator());
+    }
   }
 }
 
