@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:cogniversity/models/courses.dart';
-// import 'package:cogniversity/views/student/courses.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
+//////////Courses
   //get all courses
   Stream<QuerySnapshot<Map<String, dynamic>>> getallCourses() {
     Stream<QuerySnapshot<Map<String, dynamic>>> documentSnapshot =
@@ -17,28 +15,57 @@ class FirestoreService {
   }
 
   //add course
-  Future<String>addCourse(String courseId,String title, String description,String instructor) async{
+  Future<String>addCourse(String courseId,String title, String description,String instructor, String groupChat, String thumbnail) async{
      String res = "Succesful";
-     await _firestore.collection('course').doc().set(
+     await _firestore.collection('courses').doc().set(
       {
         "courseId":courseId,
         "title": title,
         "description": description,
         "instructor": instructor,
+        "groupChat":groupChat,
+        "thumbnail":thumbnail,
       }
      );
 
     return res;
   }
+  //Delete Course
+  Future<void>deleteCourse(String docpath)async{
+      await _firestore.collection('course').doc(docpath).delete();
+      //function to clear from storage
+  }
 
-//get video
-Stream<QuerySnapshot<Map<String, dynamic>>> getVideo(String courseId) {
+//////////Lessons
+  //add lesson
+  Future<void>addLesson(String courseId,String title, String description, String videoUrl, String thumbnail)async{
+
+    //to-do: add funtion to upload video: get download url
+
+    await _firestore.collection("video").doc().set({
+      'title': title,
+      'description':description,
+      'course':description,
+      "creator": userId,
+      "thumbnail": thumbnail,
+      'videoUrl':videoUrl
+    });
+  }
+
+//get lesson
+Stream<QuerySnapshot<Map<String, dynamic>>> getLesson(String courseId) {
   // Use whereEqualTo instead of assignment (=) for field comparison
   return _firestore.collection('video')
       .where('creator', isEqualTo: courseId)
       .snapshots();
 }
 
+//Delete Lesson
+Future<void>deleteLesson(String docpath)async{
+  await _firestore.collection('video').doc(docpath).delete();
+}
+
+//////////Enrollment
 //Enroll student
 Future<void> enrollStudent( String courseId) async {
   // Check for existing enrollment
@@ -59,14 +86,6 @@ Future<void> enrollStudent( String courseId) async {
     throw AlreadyEnrolledException();// Or show user a message
   }
 }
-// Future<void> enrollStudent( String courseId) async {
-//   await isEnrolled(userId, courseId);
-//   // Add a document to the enrolledStudents collection
-//   await _firestore.collection('enrolledStudents').add({
-//     'userId': userId,
-//     'courseId': courseId,
-//   });
-// }
 
 //Checking enrollment status:
 Future<bool> isEnrolled( String courseId) async {

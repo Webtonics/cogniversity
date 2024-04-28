@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
 import 'package:cogniversity/views/teacher/inner/congratulation_view.dart';
+import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class _AddNewCourseState extends State<AddNewCourse> {
   }
 
   addCourse()async{
-    await FirestoreService().addCourse("${Random(40)}", _titleController.text, _descriptionController.text, "${Random(40)}");
+    await FirestoreService().addCourse("courseId", "title", "description", "instructor", "groupChat", "thumbnail");
   }
 
   @override
@@ -45,7 +44,7 @@ class _AddNewCourseState extends State<AddNewCourse> {
     // final bool isfirst = currentstep == getstep()[0];
     
     return  Scaffold(
-      endDrawer: Drawer(),
+      endDrawer: const Drawer(),
       appBar: AppBar(
         title: const Text("Add a New Course"),
         
@@ -105,6 +104,11 @@ class _AddNewCourseState extends State<AddNewCourse> {
               // onStepTapped: (value) {
                 
               // },
+              ),
+              const MySpacer(height: 30,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MyElevattedButton(title: "Submit", action: (){}),
               )
           ],
         ),
@@ -186,10 +190,11 @@ class _AddNewCourseState extends State<AddNewCourse> {
                   ],
                 ),
               )),
-              const Step(title: Text("Add Lesson"), content: SizedBox(
+               Step(title: const Text("Add Group Chat"), content: SizedBox(
                 child: Column(
                   children: [
-                    Text("Basic")
+                    MyTextField(controller: _titleController, label: "Group chat", hinttext: "Link to the group chat", keyboardtype: TextInputType.text, enabled: true, maxlines: 1,),
+                    const MySpacer(height: 5,),
                   ],
                 ),
               )),

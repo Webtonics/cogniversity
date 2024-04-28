@@ -3,6 +3,7 @@ import 'package:cogniversity/providers/lesson_provider.dart';
 import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/providers/user_provider.dart';
 import 'package:cogniversity/views/auth/login.dart';
+import 'package:cogniversity/views/root.dart';
 // import 'package:cogniversity/views/intro/onboarding/onboarding.dart';
 // import 'package:cogniversity/views/responsive/responsive_engine.dart';
 // import 'package:cogniversity/views/root.dart';

@@ -1,8 +1,13 @@
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
+// import 'package:cogniversity/models/lesson.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LessonProvider extends ChangeNotifier {
+
+  // Lesson _lesson;
+
+  // Lesson? get getUser => _lessons;
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _lessons = [];
 
   // Getter for lessons
@@ -11,7 +16,7 @@ class LessonProvider extends ChangeNotifier {
   // Function to fetch lessons using FirestoreService
   void fetchLessons(String courseId) {
   FirestoreService().getLessons(courseId).listen((snapshot) {
-    _lessons = snapshot.docs.toList();
+    _lessons =  snapshot.docs.toList();
     notifyListeners();
   });
 }

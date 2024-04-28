@@ -1,4 +1,3 @@
-// import 'package:cogniversity/Services/hyperlink/hyperlink_sevice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_exception.dart';
 import 'package:cogniversity/Services/firestoreservice/firestore_service.dart';
@@ -6,14 +5,12 @@ import 'package:cogniversity/providers/role_provider.dart';
 import 'package:cogniversity/views/auxilliary/materials.dart';
 import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/inner/add_lesson.dart';
-// import 'package:cogniversity/views/student/studentapp.dart';
 import 'package:cogniversity/views/teacher/teacherapp.dart';
 import 'package:cogniversity/widgets/elevated_buttons.dart';
 import 'package:cogniversity/widgets/error_dialog.dart';
 import 'package:cogniversity/widgets/global/spacer.dart';
 import 'package:cogniversity/widgets/my_action_button.dart';
 import 'package:cogniversity/widgets/video_card_list.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -161,7 +158,12 @@ class _CourseDetailsState extends State<CourseDetails> {
                     :ElevatedButton.icon(onPressed: (){
 
                       //Action to download
-
+                      FirestoreService().addLesson(
+                        '5YwTTOnVPFLdwpYVHJoi', "Chapter 2: Types of Input devices", 
+                        "The different types of input devices", 
+                        "gs://skilloom.appspot.com/CourseLessons/5YwTTOnVPFLdwpYVHJoi/cool_background.mp4", 
+                        "https://images.pexels.com/photos/16131605/pexels-photo-16131605/free-photo-of-interior-of-a-restaurant-in-a-rustic-style.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load");
+                      
                     }, icon: const Icon(Icons.download), label: const Text("Download")),
                 
                    ],
@@ -300,12 +302,12 @@ class _CourseLessonListState extends State<CourseLessonList> {
                   final title = snap.docs[index].data()['title'];
                   final description = snap.docs[index].data()['description'];
                   return LessonList(
-                    index: index, title: title, description: description,
+                    index: index, title: title, description: description,map: snap.docs[index].data(),
                   );
                 }));
               }
 
-              else if(!snapshot.hasData){
+              else if(snapshot.hasData == false){
                 return Container( 
                   decoration: BoxDecoration( color: Colors.pink[200]),
                   height: 300,
@@ -313,13 +315,13 @@ class _CourseLessonListState extends State<CourseLessonList> {
                   child: const Center(child: Text("No Lesson Videos Available")),);
               }
               else{
-              return const Center(child: CircularProgressIndicator(),);
+              return Container( 
+                  decoration: BoxDecoration( color: Colors.pink[200]),
+                  height: 300,
+                  width: double.infinity,
+                  child: const Center(child: Text("No Lesson Videos Available")),);
             }
-            // }else{
-            //   const Center( child: Text("Waiting"),);
-            // }
             
-            // return const Center( child: Text("Waiting Last"),);
           }
         ));
   }

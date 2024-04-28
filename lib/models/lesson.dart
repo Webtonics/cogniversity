@@ -6,7 +6,7 @@ class Lesson {
   final String lessonId;
   final String courseId;
   final String title;
-  final String description;
+  final String description; 
   final String videoUrl;
   final String note;
   final List learner;

@@ -8,11 +8,12 @@ class LessonList extends StatelessWidget {
   final String description;
   
   final String title;
+  final Map<String,dynamic>map;
 
   
   const LessonList({
     super.key,
-    required this.index, required this.description, required this.title,
+    required this.index, required this.description, required this.title, required this.map,
   });
   final int index;
 
@@ -32,7 +33,7 @@ class LessonList extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(builder: ((context) => 
           
-            CourseLesson(videoSnap: getVideo(),)
+            const CourseLesson()
           //  VideoPlayerWidget(videoRef: getref())
            )),
         ),
@@ -50,11 +51,16 @@ class LessonList extends StatelessWidget {
               color: Colors.white,
             ),
             child: ListTile(
-              leading: const Icon(
-                Icons.play_circle,
-                size: 40,
+              leading: 
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(map['thumbnail']),
               ),
-              title: Text(title, maxLines: 1,),
+              // const Icon(
+              //   Icons.play_circle,
+              //   size: 40,
+              // ),
+              title: Text(map['title'], maxLines: 1,),
               subtitle: Text(description,maxLines: 1,),
               trailing: isEducator ? IconButton(onPressed: (){
                 // action to Delete 
